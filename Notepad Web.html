@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Notepad Web</title>
+<meta name="description" content="A web text editor that can be downloaded to your system!">
+<script>
+  var lastName = "unnamed"; // As in, last name of the doc. Fool.
+  //defaults to "unnamed.txt".
+  var FileToBeOpened = "You forgot to choose a file..." //Never is able to be shown but i still must init
+  
+  
+  //Found this cool download script from this ourcodeworld.com
+  //https://ourcodeworld.com/articles/read/189/how-to-create-a-file-and-generate-a-download-with-javascript-in-the-browser-without-a-server
+  function download(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}//Super useful for saving :)
+
+  function SaveAsFinal() {
+    //Called when user defines their name for the doc.
+    lastName = document.getElementById("SaveAsField").value;
+    download(lastName,document.getElementById("inputfield").value);
+    PopupControl('SaveAsPopup',-2) //Close the menu now that we're done.
+  }
+  function Save() {
+    //Called after SaveAs (If our user is paying attention) so don't need to init name
+    download(lastName,document.getElementById("inputfield").value);
+  }
+  function PopupControl(id,zindex) {
+    document.getElementById(id).style = "z-index: " + zindex;
+    //Combines multiple similar functions into one
+    //0 probably shows but consider it a wildcard
+  }
+  function help() {
+    //script kiddie deterrent
+    console.log("You'll figure it out ;)");
+  }
+  
+  function OpenFile() {
+    //I don't know what I'm doing when it comes to this API.
+    var file = document.getElementById("FileSelectorButton").files[0];
+    var reader = new FileReader();
+reader.onload = function (e) {
+    var textArea = document.getElementById("inputfield");
+    textArea.value = e.target.result;
+    PopupControl('openfile',-2);
+    };
+reader.readAsText(file);
+  //Thanks, Stack Overflow. Again.
+  //https://stackoverflow.com/questions/33640325/load-text-from-local-txt-file-into-html-textarea-using-javascript
+  }
+</script>
+<style>
+  
+#inputfield {
+  width:99.7%; /*100% creates a scrollbar... Thanks padding!*/
+  margin:0;
+  padding:0;
+  display:block;
+  height:94.8vh; /*Absolute MAX height, fills page*/
+  resize:none;
+  font-family:monospace;
+}
+body{
+  background-color:#89DAFF;
+  margin:0;
+  padding:0;
+}
+#optionbar{
+  background-color:cyan;
+  border-radius:0;
+  height:5vh;
+}
+button {
+  display:inline-block;
+  border-radius:0;
+  border:1px solid gray;
+  background-color:cyan;
+  height:100%;
+}
+button:hover {
+  border:1px solid #89DAFF;
+  background-color:blue;
+}
+button.center {
+  text-align:center;
+  display:inline-block;
+  margin-left:auto;
+  margin-right:auto;
+  padding:1%;
+}
+
+#about {
+  display:block;
+  background-color:#89DAFF;
+  border:1px solid black;
+  position:fixed;
+  margin:20%;
+  margin-top:10%;
+  width:60%;
+  z-index:-2; /*Hide with just 1 CSS tag!*/
+  text-align:center;
+}
+#openfile {
+  display:block;
+  background-color:#89DAFF;
+  border:1px solid black;
+  position:fixed;
+  margin:20%;
+  margin-top:10%;
+  width:60%;
+  z-index:-2; /*Hide with just 1 CSS tag!*/
+  text-align:center;
+}
+#SaveAsPopup {
+  display:block;
+  background-color:#89DAFF;
+  border:1px solid black;
+  position:fixed;
+  margin:20%;
+  margin-top:10%;
+  width:60%;
+  z-index:-2;
+  text-align:center;
+}
+li {
+  font-family:sans-serif;
+  text-decoration:none;
+}
+li a {
+  text-decoration:none;
+}
+#javascriptfu {
+  display:block;
+  background-color:#89DAFF;
+  border:1px solid black;
+  position:fixed;
+  margin:20%;
+  margin-top:10%;
+  width:60%;
+  z-index:2;
+  text-align:center;
+}
+p {font-family:sans-serif;}
+h1 {font-family:sans-serif;}
+</style>
+</head>
+<body>
+  <!-- Anti-IE and other outdated garbage browsers-->
+  <noscript>
+    <div id="javascriptfu">
+    <h1>Enable Javascript.</h1>
+    <p>Do it.</p>
+    <p>If you're on Internet Explorer,<b> STOP!</b> Doesn't work even with JavaScript enabled.</p>
+    </div>
+  </noscript>
+  <!-- About section -->
+  <div id="about">
+    <h1>Notepad Web</h1>
+    <p>Made by myself as a challenge.</p>
+    <p>Save to your PC by pressing CTRL+S and selecting "HTML only"</p>
+    <p>MHTML won't work because it greys out the text window for some reason.</p>
+    <p>Third party code used:</p>
+    <ul>
+      <li><a href="https://stackoverflow.com/questions/33640325/load-text-from-local-txt-file-into-html-textarea-using-javascript">Open File from stack overflow</a></li>
+      <li><a href="https://ourcodeworld.com/articles/read/189/how-to-create-a-file-and-generate-a-download-with-javascript-in-the-browser-without-a-server">Create file (To save) from ourcodeworld.com</a></li>
+    </ul>
+    <button class="center" onclick="PopupControl('about',-2)">Close</button>
+  </div>
+  <!--Open file popup-->
+  <div id="openfile">
+    <h1>Open file</h1>
+    <p><b>Caution: This will erase everything open here right now</b></p>
+    <input type="file" name="FileSelectorButton" id="FileSelectorButton" accept=".txt, .text, .rst, .md, .html, .js, .c, .css, .cpp">
+    <p>You may also drag and drop the file to the button.</p>
+    <p>Please note: Very, very large files on older computers may cause a freeze. Wait it out. If it takes too long, don't.</p>
+    <button class="center" onclick="OpenFile();">Open!</button>
+    <button class="center" onclick="PopupControl('openfile',-2);">Nevermind...</button>
+  </div>
+  <div id="SaveAsPopup">
+    <h1>Save As</h1>
+    <input type="text" id="SaveAsField">.txt <!--P tag creates newline BEFORE the text--><br><br>
+    <button class="center" onclick="SaveAsFinal();">Save</button><button onclick="PopupControl('SaveAsPopup',-2)" class="center">Nevermind...</button>
+  </div>
+<div id="optionbar"><button onclick="PopupControl('openfile',2);">Open</button><button onclick="Save();">Save</button><button onclick="PopupControl('SaveAsPopup',2)">Save As</button><button onclick="PopupControl('about',2);">About</button></div>
+
+  <textarea name="inputfield" id="inputfield">Welcome to Notepad Web. Type here!</textarea>
+</body>
+</html>
