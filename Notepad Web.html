@@ -108,6 +108,8 @@ button.center {
   width:60%;
   z-index:-2; /*Hide with just 1 CSS tag!*/
   text-align:center;
+  max-height:80%; /*Due to the long legal disclaimer, may overflow on smaller screens. This is my solution.*/
+  overflow:scroll;
 }
 #openfile {
   display:block;
@@ -188,7 +190,7 @@ h1 {font-family:sans-serif;}
     <p><b>Caution: This will erase everything open here right now</b></p>
     <input type="file" name="FileSelectorButton" id="FileSelectorButton" accept=".txt, .text, .rst, .md, .html, .js, .c, .css, .cpp">
     <p>You may also drag and drop the file to the button.</p>
-    <p>Please note: Very, very large files on older computers may cause a freeze. Wait it out. If it takes too long, don't.</p>
+    <p>Please note: Very, very large files on older computers may cause a freeze. Wait it out. If it takes too long, don't, because that likely means this tab has crashed.</p>
     <button class="center" onclick="OpenFile();">Open!</button>
     <button class="center" onclick="PopupControl('openfile',-2);">Nevermind...</button>
   </div>
