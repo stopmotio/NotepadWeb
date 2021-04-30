@@ -1,7 +1,7 @@
 # NotepadWeb
 Very basic web text editor
 # Usage
-Option 1: Open it using the link provided in the sidebar
+Option 1: Open it using the link provided in the sidebar<br/>
 Option 2: Download from source
 - Download source
 - Open Notepad Web.html
