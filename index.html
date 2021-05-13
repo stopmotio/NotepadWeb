@@ -3,6 +3,7 @@
 <head>
 <title>Notepad Web</title>
 <meta name="description" content="A web text editor that can be downloaded to your system!">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>
   var lastName = "unnamed"; // As in, last name of the doc. Fool.
   //defaults to "unnamed.txt".
@@ -36,8 +37,8 @@
   }
   function PopupControl(id,zindex) {
     document.getElementById(id).style = "z-index: " + zindex;
-    //Combines multiple similar functions into one
-    //0 probably shows but consider it a wildcard
+    //this is bad for accessibility and needs to be recoded
+    //I tried doing this and it failed miserably so I'm leaving it like this for now
   }
   function help() {
     //script kiddie deterrent
@@ -106,7 +107,7 @@ button.center {
   margin:20%;
   margin-top:10%;
   width:60%;
-  z-index:-2; /*Hide with just 1 CSS tag!*/
+  z-index:-2;
   text-align:center;
   max-height:80%; /*Due to the long legal disclaimer, may overflow on smaller screens. This is my solution.*/
   overflow:scroll;
@@ -119,7 +120,7 @@ button.center {
   margin:20%;
   margin-top:10%;
   width:60%;
-  z-index:-2; /*Hide with just 1 CSS tag!*/
+  z-index:-2;
   text-align:center;
   max-height:80%; /*Due to the long legal disclaimer, may overflow on smaller screens. This is my solution.*/
   overflow:scroll;
@@ -132,7 +133,7 @@ button.center {
   margin:20%;
   margin-top:10%;
   width:60%;
-  z-index:-2; /*Hide with just 1 CSS tag!*/
+  z-index:-2;
   text-align:center;
 }
 #SaveAsPopup {
